@@ -5,10 +5,13 @@ import httpInstance from "@/utils/http";
  * @param:
  * @returns 
  */
-export function getBannerApi() {
+export function getBannerApi(distributionSite) {
     return httpInstance({
         url: "/home/banner",
-        method: 'GET'
+        method: 'GET',
+        params: {
+            distributionSite
+        }
     })
 }
 

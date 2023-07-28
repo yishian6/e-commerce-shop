@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <HomeCategory />
-        <HomeBanner />
+        <HomeBanner :distributionSite="1" />
     </div>
     <HomeNew />
     <HomeHot />

@@ -28,7 +28,7 @@ onUnmounted(() => { window.removeEventListener('scroll', handleScroll) });
                 </li>
                 <!-- 使用v-for展示数据 -->
                 <li v-for="category in categoryStore.categoryList" :key="category.id">
-                    <RouterLink to="/">{{ category.name }}</RouterLink>
+                    <RouterLink :to="`/category/${category.id}`">{{ category.name }}</RouterLink>
                 </li>
             </ul>
 
