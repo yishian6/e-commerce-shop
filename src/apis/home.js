@@ -27,3 +27,17 @@ export function getHotApi() {
         method: "GET"
     })
 }
+
+
+/**
+ * @description:获取product数据
+ * @param:
+ * @returns 
+ */
+
+export function getProductApi() {
+    return httpInstance({
+        url: '/home/goods',
+        method: 'GET'
+    })
+}
