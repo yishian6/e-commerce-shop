@@ -1,6 +1,6 @@
 <script setup>
 import HomePanel from './HomePanel.vue'
-import GoodsItem from './GoogsItem.vue'
+import GoodsItem from './GoodsItem.vue'
 import { onMounted, reactive } from 'vue'
 import { getProductApi } from '@/apis/home';
 

@@ -1,19 +1,31 @@
 <script setup>
 import { getTopCategoryApi } from '@/apis/category.js';
 import HomeBanner from '@/views/Home/components/HomeBanner.vue';
-import { reactive, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import GoodsItem from '@/views/Home/components/GoodsItem.vue';
+import { reactive, onMounted } from 'vue'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 let topCategory = reactive({
     data: {}
 })
 const route = useRoute()
-const getTopCategory = (id) => {
+
+const getTopCategory = (id = route.params.id) => {
     getTopCategoryApi(id)
-        .then(res => topCategory.data = res.result) // 使用 Object.assign() 进行赋值)
+        .then(res => topCategory.data = res.result)
         .catch(error => console.log(error))
 }
-watch(route, () => getTopCategory(route.params.id))
-console.log(topCategory)
+
+onMounted(() => getTopCategory())
+
+// 目标:路由参数变化的时候 可以把分类数据接口重新发送
+onBeforeRouteUpdate((to) => {
+    // 存在问题：使用最新的路由参数请求最新的分类数据
+    getTopCategory(to.params.id)
+})
+
+// watch(route, () => {
+//     route.name === 'category' && getTopCategory(route.params.id), { immediate: true }
+// })
 </script>
 
 <template>
@@ -26,7 +38,28 @@ console.log(topCategory)
                     <el-breadcrumb-item>{{ topCategory.data.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
+            <!-- 轮播图 -->
             <HomeBanner :distributionSite="2" />
+            <!-- 全部分类 -->
+            <div class="sub-list">
+                <h3>全部分类</h3>
+                <ul>
+                    <li v-for="i in topCategory.data.children" :key="i.id">
+                        <RouterLink :to="`/category/sub/${i.id}`">
+                            <img :src="i.picture" />
+                            <p>{{ i.name }}</p>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
+            <div class="ref-goods" v-for="item in topCategory.data.children" :key="item.id">
+                <div class="head">
+                    <h3>- {{ item.name }}-</h3>
+                </div>
+                <div class="body">
+                    <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
