@@ -18,6 +18,11 @@ const router = createRouter({
           component: () => import("@/views/SubCategory/index.vue")
         },
         {
+          path: 'detail/:id',
+          name: 'detail',
+          component: () => import("@/views/Detail/index.vue")
+        },
+        {
           path: '',
           name: 'home',
           component: () => import('@/views/Home/index.vue')
@@ -29,7 +34,11 @@ const router = createRouter({
       name: 'login',
       component: () => import('@/views/Login/index.vue')
     }
-  ]
+  ],
+  // 路由滚动行为定制
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router
