@@ -1,6 +1,6 @@
 <script setup>
 import { fetchHotGoodsApi } from '@/apis/detail.js'
-import { onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router';
 const props = defineProps({
     hotType: {
@@ -16,6 +16,7 @@ const hotGoods = reactive([])
 //     limit: 5
 // })
 // 调用HotGoods的api接口
+const hotTitle = computed(() => props.hotType === 1 ? '24小时热榜' : '周热榜')
 const getHotGoods = () => {
     fetchHotGoodsApi(route.params.id, props.hotType).then(res => {
         hotGoods.splice(0, hotGoods.length, ...res.result)
@@ -28,7 +29,7 @@ onMounted(() => getHotGoods())
 
 <template>
     <div class="goods-hot">
-        <h3>周日榜单</h3>
+        <h3>{{ hotTitle }}</h3>
         <!-- 商品区块 -->
         <RouterLink to="/" class="goods-item" v-for="item in hotGoods" :key="item.id">
             <img :src="item.picture" alt="" />

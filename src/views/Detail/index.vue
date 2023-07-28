@@ -3,6 +3,7 @@ import { getGoodsApi } from '@/apis/detail.js'
 import { reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from '@/views/Detail/components/DetailHot.vue'
+import ImageView from '@/components/ImageView/index.vue'
 const goods = reactive({
     data: {}
 })
@@ -13,6 +14,7 @@ const getGoods = () => {
 
 onMounted(() => getGoods())
 // 前面的二级分类好像是因为它存的是数组，vue中可以监听到数组中的增加删除操作，所以可以渲染视图，而这里的goods是一个空对象，vue中会给它创建一个响应式代理对象，而你原来的goods是一个空的
+// let stop; const start = () => { stop = watch()... } @mouseenter="start" @mouseleave="stop"
 </script>
 
 <template>
@@ -37,7 +39,7 @@ onMounted(() => getGoods())
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-
+                            <ImageView />
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
